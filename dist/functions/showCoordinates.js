@@ -26,6 +26,7 @@ exports.default = new NativeFunction({
     execute(ctx, [canvas]) {
         if (!__1.ForgeCanvas.canvases || !__1.ForgeCanvas.canvases[canvas] || !(__1.ForgeCanvas.canvases[canvas] instanceof classes_1.CanvasBuilder))
             return this.customError("No canvas with provided name.");
+        const { width, height } = __1.ForgeCanvas.canvases[canvas];
         __1.ForgeCanvas.canvases[canvas].fillText(`X: ${width}`, width - 50, height - 10, "16px Arial", 0xFFFFFF);
         __1.ForgeCanvas.canvases[canvas].fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
         return this.success();
