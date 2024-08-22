@@ -1,23 +1,29 @@
-const { AttachmentBuilder } = require("discord.js");
-const { CanvasBuilder } = require("../classes/builder");
-const { NativeFunction, ArgType } = require("@tryforge/forgescript");
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 
-module.exports = new NativeFunction({
+const AttachmentBuilder = require("discord.js");
+const CanvasBuilder = require("../classes");
+const forgescript_1 = require("@tryforge/forgescript");
+
+exports.default = new forgescript_1.NativeFunction({
     name: "$showCoordinates",
     version: "0.1.0",
-    description: "Shows the X and Y coordinates on the canvas.",
+    description: "Shows X and Y of the canvas",
+    alias: [
+        "$show",
+    ],
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "canvas",
-            description: "The name of the canvas where the coordinates will be shown.",
+            description: "The name of canvas to draw X and Y on.",
             rest: false,
-            type: ArgType.String,
+            type: forgescript_1.ArgType.String,
             required: true
         }
     ],
-    execute: async (ctx, [canvas]) => {
+    execute(ctx, [canvas]) {
         canvas = canvas?.trim();
 
         const canvs = ctx.getEnvironmentKey(`canvas_${canvas}`);
