@@ -1,6 +1,6 @@
-import { AttachmentBuilder } from "discord.js";
-import { ArgType, NativeFunction } from "@tryforge/forgescript";
-import { CanvasBuilder } from "../classes/builder";
+import { AttachmentBuilder } from "discord.js"
+import { ArgType, NativeFunction } from "@tryforge/forgescript"
+import { CanvasBuilder } from "../classes"
 
 export default new NativeFunction({
     name: "$showCoordinates",
