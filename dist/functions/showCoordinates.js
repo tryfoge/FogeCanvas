@@ -1,6 +1,6 @@
 const { AttachmentBuilder } = require("discord.js");
 const { ArgType, NativeFunction } = require("@tryforge/forgescript");
-const CanvasBuilder = require("../classes/CanvasBuilder");
+const CanvasBuilder = require("../classes/builder");
 
 module.exports = new NativeFunction({
     name: "$showCoordinates",
