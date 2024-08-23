@@ -1,8 +1,7 @@
 "use strict";
 const { NativeFunction, ArgType } = require("@tryforge/forgescript");
 const { ForgeCanvas } = require("..");
-const { CanvasBuilder } = require("../classes");
-const { AttachmentBuilder } = require("discord.js");
+const { CanvasBuilder } = require("./classes/builder");
 
 module.exports = new NativeFunction({
     name: "$showCoordinates",
@@ -34,10 +33,6 @@ module.exports = new NativeFunction({
         const coordText = `X: 0 - ${width}, Y: 0 - ${height}`;
         targetCanvas.fillText(coordText, 10, height - 10, "16px Arial", 0xFFFFFF);
 
-        // Render and create an attachment
-        const buffer = targetCanvas.render();
-        const attachment = new AttachmentBuilder(buffer, { name: `${canvas}.png` });
-
-        return ctx.success(attachment);
+        return this.success();
     }
 });
