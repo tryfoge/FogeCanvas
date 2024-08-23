@@ -1,21 +1,20 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-
+const { NativeFunction, ArgType } = require("@tryforge/forgescript");
 const { ForgeCanvas } = require("..");
 const { CanvasBuilder } = require("../classes");
-const { NativeFunction, ArgType } = require("@tryforge/forgescript");
+const { AttachmentBuilder } = require("discord.js");
 
-exports.default = new NativeFunction({
+module.exports = new NativeFunction({
     name: "$showCoordinates",
     version: "0.1.0",
-    description: "Shows X and Y of the canvas",
+    description: "Shows the full X and Y coordinates on the canvas using numbers.",
     alias: ["$show"],
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "canvas",
-            description: "The name of the canvas to draw X and Y on.",
+            description: "The name of the canvas to draw X and Y coordinates on.",
             rest: false,
             type: ArgType.String,
             required: true
@@ -28,12 +27,17 @@ exports.default = new NativeFunction({
             return ctx.error("No canvas with the provided name.");
         }
 
-        const { width, height } = targetCanvas;
+        const canvasCtx = targetCanvas.getContext();
+        const { width, height } = canvasCtx.canvas;
 
-        targetCanvas.fillText(`X: ${width}`, width - 50, height - 10, "16px Arial", 0xFFFFFF);
-        targetCanvas.fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
+        // Draw the full coordinates on the canvas
+        const coordText = `X: 0 - ${width}, Y: 0 - ${height}`;
+        targetCanvas.fillText(coordText, 10, height - 10, "16px Arial", 0xFFFFFF);
 
-        targetCanvas.render();
-        return this.success();
+        // Render and create an attachment
+        const buffer = targetCanvas.render();
+        const attachment = new AttachmentBuilder(buffer, { name: `${canvas}.png` });
+
+        return ctx.success(attachment);
     }
 });
