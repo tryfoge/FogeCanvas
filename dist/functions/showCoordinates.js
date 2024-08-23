@@ -1,17 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 
-const __1 = require("..");
-const classes_1 = require("../classes");
+const { ForgeCanvas } = require("..");
+const { CanvasBuilder } = require("../classes");
 const { NativeFunction, ArgType } = require("@tryforge/forgescript");
 
 exports.default = new NativeFunction({
     name: "$showCoordinates",
     version: "0.1.0",
     description: "Shows X and Y of the canvas",
-    alias: [
-           "$show",
-           ],
+    alias: ["$show"],
     unwrap: true,
     brackets: true,
     args: [
@@ -24,13 +22,23 @@ exports.default = new NativeFunction({
         }
     ],
     execute(ctx, [canvas]) {
-        if (!__1.ForgeCanvas.canvases || !__1.ForgeCanvas.canvases[canvas] || !(__1.ForgeCanvas.canvases[canvas] instanceof classes_1.CanvasBuilder))
-            return this.customError("No canvas with provided name.");
+        // Retrieve the canvas by name
+        const targetCanvas = ForgeCanvas.canvases[canvas];
         
-        const { width, height } = __1.ForgeCanvas.canvases;
-        
-        __1.ForgeCanvas.canvases[canvas].fillText(`X: ${width}`, width - 50, height - 10, "16px Arial", 0xFFFFFF);
-        __1.ForgeCanvas.canvases[canvas].fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
-        return this.success();
+        if (!targetCanvas || !(targetCanvas instanceof CanvasBuilder)) {
+            return ctx.error("No canvas with the provided name.");
+        }
+
+        // Get the width and height of the canvas
+        const width = targetCanvas.width();
+        const height = targetCanvas.height();
+
+        // Draw X and Y coordinates on the canvas
+        targetCanvas.fillText(`X: ${width}`, width - 50, height - 10, "16px Arial", 0xFFFFFF);
+        targetCanvas.fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
+
+        // Render the canvas and return success
+        targetCanvas.render();
+        return ctx.success();
     }
 });
