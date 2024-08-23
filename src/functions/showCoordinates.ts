@@ -19,22 +19,17 @@ export default new NativeFunction({
         }
     ],
     execute: async (ctx, [canvas]) => {
-        // Retrieve the canvas by name
         const targetCanvas = ForgeCanvas.canvases[canvas];
         
         if (!targetCanvas || !(targetCanvas instanceof CanvasBuilder)) {
             return ctx.error("No canvas with the provided name.");
         }
 
-        // Get the width and height of the canvas
-        const width = targetCanvas.width();
-        const height = targetCanvas.height();
+        const { width, height } = targetCanvas;
 
-        // Draw X and Y coordinates on the canvas
         targetCanvas.fillText(`X: ${width}`, width - 50, height - 10, "16px Arial", 0xFFFFFF);
         targetCanvas.fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
 
-        // Render the canvas and return success
         await targetCanvas.render();
         return ctx.success();
     }
