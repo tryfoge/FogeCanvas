@@ -31,6 +31,6 @@ export default new NativeFunction({
         targetCanvas.fillText(`Y: ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
 
         await targetCanvas.render();
-        return ctx.success();
+        return this.success();
     }
 });
