@@ -1,7 +1,6 @@
 import { ArgType, NativeFunction } from "@tryforge/forgescript";
-import { ForgeCanvas } from "..";
-import { CanvasBuilder } from "../classes";
-import { AttachmentBuilder } from "discord.js";
+import ForgeCanvas from "..";
+import CanvasBuilder from "../classes";
 
 export default new NativeFunction({
     name: "$showCoordinates",
@@ -34,10 +33,6 @@ export default new NativeFunction({
         targetCanvas.fillText(`X: 0 - ${width}`, 10, height - 30, "16px Arial", 0xFFFFFF);
         targetCanvas.fillText(`Y: 0 - ${height}`, 10, height - 10, "16px Arial", 0xFFFFFF);
 
-        // Render and create an attachment
-        const buffer = targetCanvas.render();
-        const attachment = new AttachmentBuilder(buffer, { name: `${canvas}.png` });
-
-        return this.success(attachment);
+        return this.success();
     },
 });
