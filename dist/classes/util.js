@@ -86,7 +86,7 @@ class CanvasUtil {
 exports.CanvasUtil = CanvasUtil;
 ;
 exports.Logger = {
-    DateColor: chalk_1.default.bold,
+    DateColor: chalk_1.default,
     Colors: {
         INFO: chalk_1.default.cyan.bold,
         WARN: chalk_1.default.yellow.bold,
