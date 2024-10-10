@@ -86,31 +86,14 @@ exports.default = new forgescript_1.NativeFunction({
         console.log('Background color:', bgColor);
         console.log('Fill color:', fillColor);
         // **Draw background**
-        ctx2d.fillStyle = bgColor || 'gray'; // Use default color if bgColor is invalid
-        if (borderRadius) {
-            // Draw rounded background
-            ctx2d.beginPath();
-            ctx2d.moveTo(x + borderRadius, y);
-            ctx2d.lineTo(x + width - borderRadius, y);
-            ctx2d.quadraticCurveTo(x + width, y, x + width, y + borderRadius);
-            ctx2d.lineTo(x + width, y + height - borderRadius);
-            ctx2d.quadraticCurveTo(x + width, y + height, x + width - borderRadius, y + height);
-            ctx2d.lineTo(x + borderRadius, y + height);
-            ctx2d.quadraticCurveTo(x, y + height, x, y + height - borderRadius);
-            ctx2d.lineTo(x, y + borderRadius);
-            ctx2d.quadraticCurveTo(x, y, x + borderRadius, y);
-            ctx2d.closePath();
-            ctx2d.fill();
-        }
-        else {
-            // Draw rectangular background
-            ctx2d.fillRect(x, y, width, height);
-        }
+        ctx2d.fillStyle = bgColor;
+        ctx2d.fillRect(x, y, width, height); // Draw the background rectangle
         // **Draw progress fill**
-        const progressWidth = progress * width;
-        ctx2d.fillStyle = fillColor || 'green'; // Use default color if fillColor is invalid
+        const progressWidth = progress * width; // Calculate the width of the progress fill
+        ctx2d.fillStyle = fillColor;
+        ctx2d.fillRect(x, y, progressWidth, height); // Draw the progress fill rectangle
+        // Optional: Draw rounded corners
         if (borderRadius) {
-            // Draw rounded progress
             ctx2d.beginPath();
             ctx2d.moveTo(x + borderRadius, y);
             ctx2d.lineTo(x + progressWidth - borderRadius, y);
@@ -123,10 +106,6 @@ exports.default = new forgescript_1.NativeFunction({
             ctx2d.quadraticCurveTo(x, y, x + borderRadius, y);
             ctx2d.closePath();
             ctx2d.fill();
-        }
-        else {
-            // Draw rectangular progress fill
-            ctx2d.fillRect(x, y, progressWidth, height);
         }
         return this.success();
     },
