@@ -83,9 +83,13 @@ export default new NativeFunction({
 
         const ctx2d = canvas.ctx;
 
+        // Validate progress to stay between 0 and 1
+        progress = Math.max(0, Math.min(progress, 1)); // Ensures progress is between 0 and 1
+
         // Draw background
         ctx2d.fillStyle = bgColor;
         if (borderRadius) {
+            // Draw rounded background
             ctx2d.beginPath();
             ctx2d.moveTo(x + borderRadius, y);
             ctx2d.lineTo(x + width - borderRadius, y);
@@ -99,13 +103,15 @@ export default new NativeFunction({
             ctx2d.closePath();
             ctx2d.fill();
         } else {
+            // Draw rectangular background
             ctx2d.fillRect(x, y, width, height);
         }
 
-        // Draw progress
+        // Draw progress fill
+        const progressWidth = progress * width;
         ctx2d.fillStyle = fillColor;
-        const progressWidth = Math.max(0, Math.min(width, progress * width)); // Ensures progress stays between 0 and width
         if (borderRadius) {
+            // Draw rounded progress
             ctx2d.beginPath();
             ctx2d.moveTo(x + borderRadius, y);
             ctx2d.lineTo(x + progressWidth - borderRadius, y);
@@ -119,6 +125,7 @@ export default new NativeFunction({
             ctx2d.closePath();
             ctx2d.fill();
         } else {
+            // Draw rectangular progress fill
             ctx2d.fillRect(x, y, progressWidth, height);
         }
 
