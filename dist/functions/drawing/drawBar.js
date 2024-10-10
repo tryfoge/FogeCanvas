@@ -82,8 +82,11 @@ exports.default = new forgescript_1.NativeFunction({
         const ctx2d = canvas.ctx;
         // Validate progress to stay between 0 and 1
         progress = Math.max(0, Math.min(progress, 1)); // Ensures progress is between 0 and 1
-        // Draw background
-        ctx2d.fillStyle = bgColor;
+        // **DEBUG: Log colors to check if they are valid**
+        console.log('Background color:', bgColor);
+        console.log('Fill color:', fillColor);
+        // **Draw background**
+        ctx2d.fillStyle = bgColor || 'gray'; // Use default color if bgColor is invalid
         if (borderRadius) {
             // Draw rounded background
             ctx2d.beginPath();
@@ -103,9 +106,9 @@ exports.default = new forgescript_1.NativeFunction({
             // Draw rectangular background
             ctx2d.fillRect(x, y, width, height);
         }
-        // Draw progress fill
+        // **Draw progress fill**
         const progressWidth = progress * width;
-        ctx2d.fillStyle = fillColor;
+        ctx2d.fillStyle = fillColor || 'green'; // Use default color if fillColor is invalid
         if (borderRadius) {
             // Draw rounded progress
             ctx2d.beginPath();
