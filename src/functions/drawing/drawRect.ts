@@ -64,7 +64,7 @@ export default new NativeFunction({
             description: 'The rect radius.',
             type: ArgType.Number,
             required: false,
-            rest: false
+            rest: true
         }
     ],
     async execute (ctx: Context, [name, t, style, x, y, w, h, r]) {
@@ -80,10 +80,8 @@ export default new NativeFunction({
             return this.customError('No style provided.');
 
         let s: any;
-        console.log(style);
         if (style) {
             s = style.split('://');
-            console.log(s);
             if (s[0] === 'gradient') {
                 const gradient = ctx.gradientManager?.get(s.slice(1).join('://'));
                 if (!gradient) return this.customError('No gradient');
@@ -94,8 +92,7 @@ export default new NativeFunction({
                     type = splits.shift()?.toLowerCase(),
                     repeat = splits.length > 0 && ['repeat', 'repeat-x', 'repeat-y', 'no-repeat'].includes(splits[splits.length - 1]) ? splits.pop() : null;
                 let image: Image | ImageData;
-                console.log(splits, type, repeat, s.slice(1).join('://').split(':'), (repeat ? splits.join(':') : splits.join()));
-            
+                
                 if (type === 'canvas') {
                     const canvas_2 = ctx.canvasManager?.get(repeat ? splits.join(':') : splits.join())?.ctx;
             
@@ -120,14 +117,13 @@ export default new NativeFunction({
                         );
                     })() : Colors[style]);
             };
-            console.log(s);
         }
 
         const styleT = t === FillOrStrokeOrClear.fill ? 'fillStyle' : 'strokeStyle',
               oldstyle = canvas.ctx[styleT];
 
         canvas.ctx[styleT] = s ?? '#000000';
-        canvas.rect(t, x, y, w, h, r);
+        canvas.rect(t, x, y, w, h, r.length === 1 ? r[0] : r);
         canvas.ctx[styleT] = oldstyle;
 
         return this.success();
