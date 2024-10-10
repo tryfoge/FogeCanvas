@@ -86,10 +86,6 @@ export default new NativeFunction({
         // Validate progress to stay between 0 and 1
         progress = Math.max(0, Math.min(progress, 1)); // Ensures progress is between 0 and 1
 
-        // **DEBUG: Log colors to check if they are valid**
-        console.log('Background color:', bgColor);
-        console.log('Fill color:', fillColor);
-
         // **Draw background**
         ctx2d.fillStyle = bgColor;
         ctx2d.fillRect(x, y, width, height); // Draw the background rectangle
