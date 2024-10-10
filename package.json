@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/tryforge/ForgeCanvas#readme",
   "devDependencies": {
-    "@tryforge/forgescript": "^1.4.0",
+    "@tryforge/forgescript": "github:tryforge/forgescript#dev",
     "@types/node": "^22.5.0",
     "typedoc": "^0.26.6",
     "typescript": "^5.5.4",
